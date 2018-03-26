@@ -1,0 +1,86 @@
+{% extends "office/base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+{% load static %}
+{% load formset_tags %}
+
+{% block stylesheets %}
+<style>
+.mailman-row input {margin: 0 25px;}
+</style>
+{% endblock %}
+{% block content %}
+<script type="text/javascript" src="{% static "js/jquery.formset.js" %}"></script>
+<form method="POST" action="{% url "plugins:byro_mailman:lists.sync" %}">
+    {% csrf_token %}
+    <button class="btn btn-success" type="submit">{% trans "Sync lists" %}</button>
+</form>
+<form method="POST" action="" class="formset" data-formset data-formset-prefix="{{ formset.prefix }}">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    {% bootstrap_formset_errors formset %}
+    <table class="table table-condensed table-bordered">
+        <thead>
+            <tr>
+                <th class="table-column-medium">{% trans "Name" %}</th>
+                <th class="table-column-medium">{% trans "Subscribers" %}</th>
+                <th class="table-column-medium"></th>
+                <th class="table-column-medium"></th>
+                <th class="table-column-small"></th>
+            </tr>
+        </thead>
+        <tbody data-formset-body>
+            {% for form in formset %}
+            <tr data-formset-form class="mailman-row">
+                <td>{% bootstrap_field form.name layout="inline" %}</td>
+                <td>{{ form.instance.subscribers.count }}</td>
+                <td>{% bootstrap_field form.add_when_joining layout="inline" %}</td>
+                <td>{% bootstrap_field form.remove_when_leaving layout="inline" %}</td>
+                <td>
+                    {% bootstrap_field form.DELETE field_class="sr-only" form_group_class="" %}
+                    {% bootstrap_field form.id field_class="sr-only" form_group_class="" %}
+                    <a href="{% url "plugins:byro_mailman:lists.sync" %}?list_id={{ form.instance.name }}" class="btn btn-info">
+                        <i class="fa fa-refresh"></i>
+                    </a>
+                    <button type="button" class="btn btn-danger" data-formset-delete-button>
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+            <script type="form-template" data-formset-empty-form>
+                {% escapescript %}
+                    <tr data-formset-form class="mailman-row">
+                        <td>{% bootstrap_field formset.empty_form.name layout="inline" %}</td>
+                        <td></td>
+                        <td>{% bootstrap_field formset.empty_form.add_when_joining layout="inline" %}</td>
+                        <td>{% bootstrap_field formset.empty_form.remove_when_leaving layout="inline" %}</td>
+                        <td>
+                            {% bootstrap_field formset.empty_form.DELETE field_class="sr-only" form_group_class="" %}
+                            {% bootstrap_field formset.empty_form.id field_class="sr-only" form_group_class="" %}
+                            <button type="button" class="btn btn-danger" data-formset-delete-button>
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                {% endescapescript %}
+            </script>
+            </tbody>
+    </table>
+    <p class="offset-9">
+        <button type="button" class="btn btn-secondary" data-formset-add>
+            <i class="fa fa-plus"></i> {% trans "Add a new mailing list" %}
+        </button>
+        <button type="submit" class="btn btn-primary">
+            {% trans "Save" %}
+        </button>
+    </p>
+</form>
+<script>
+jQuery(function($) {
+    $(".formset").formset({
+        animateForms: true
+    });
+});
+</script>
+{% endblock %}

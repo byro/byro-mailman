@@ -1,0 +1,37 @@
+{% extends "office/member/base.html" %}
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block member_content %}
+
+<form method='post' action='{% url "plugins:byro_mailman:members.mailman.add" pk=member.pk %}'>
+    {% csrf_token %}
+    <div class="card member-form-card">
+        <div class="card-body">
+            {% bootstrap_form form layout='horizontal' %}
+        </div>
+        <div class="card-body">
+            <button class="btn btn-primary" type="submit">{% trans "Add to list" %}</button>
+        </div>
+    </div>
+</form>
+{% if lists %}
+    <table class="table table-bordered">
+        <thead>
+            <th>{% trans "List" %}</th>
+            <th>{% trans "Timestamp" %}</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for list in lists %}
+                <tr>
+                    <td>{{ list.mailing_list.name }}</td>
+                    <td>{{ list.datetime }}</td>
+                    <td><a href="{% url "plugins:byro_mailman:members.mailman.remove" pk=member.pk list_id=list.mailing_list.id %}" class="btn btn-sm btn-danger">{% trans "remove" %}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}
