@@ -1,7 +1,8 @@
+import json
 from urllib.parse import urljoin
 
 import requests
-from django.db import models
+from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
 from solo.models import SingletonModel
 
@@ -39,7 +40,28 @@ class MailingList(models.Model):
 
     @property
     def url(self):
-        return urljoin(MailmanConfiguration.get_solo().url, self.name)
+        base = MailmanConfiguration.get_solo().url
+        if not base.endswith('/'):
+            base += '/'
+        return base + self.name
+
+    @transaction.atomic
+    def sync(self):
+        config = MailmanConfiguration.get_solo()
+        response = requests.get(self.url, auth=(config.user, config.password))
+        if not response.status_code == 200:
+            raise Exception(response.content.decode())
+
+        from byro.members.models import Member
+        new_addresses = set(json.loads(response.content.decode()))
+        old_addresses = set(self.subscribers.all().values_list('email', flat=True))
+
+        delete = old_addresses - new_addresses
+        add = new_addresses - old_addresses
+        self.subscribers.filter(member__email__in=delete).delete()
+        for email in add:
+            MailingListEntry.objects.create(mailing_list=self, member=Member.objects.filter(email=email).first(), email=email)
+        return (len(add), len(delete))
 
 
 class MailingListEntry(models.Model):
