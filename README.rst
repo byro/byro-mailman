@@ -1,7 +1,12 @@
 The byro Mailman plugin
 ==========================
 
-This is a plugin for `byro`_. 
+This is a plugin for `byro`_. It allows to automatically and manually
+(un)subscribe members to mailman mailinglists if mailman-api_ has been
+installed on the mailman server.
+
+Several mailinglists may be managed, and you can configure on a per-list basis
+if members should be automatically added and/or removed from the list.
 
 Development setup
 -----------------
@@ -28,3 +33,4 @@ Released under the terms of the Apache License 2.0
 
 
 .. _byro: https://github.com/byro/byro
+.. _mailman-api: http://mailman-api.readthedocs.io/en/stable/quickstart.html
