@@ -63,6 +63,34 @@ class MailingList(models.Model):
             MailingListEntry.objects.create(mailing_list=self, member=Member.objects.filter(email=email).first(), email=email)
         return (len(add), len(delete))
 
+    def add(self, member, address=None):
+        config = MailmanConfiguration.get_solo()
+        if not self.subscribers.filter(member=member).exists():
+            response = requests.put(
+                self.url,
+                {'address': address or member.email, 'digest': False, 'fullname': ''},
+                auth=(config.user, config.password),
+            )
+            try:
+                response.raise_for_status()
+                MailingListEntry.objects.get_or_create(mailing_list=self, member=member)
+            except Exception as e:
+                raise
+
+    def remove(self, member, address=None):
+        config = MailmanConfiguration.get_solo()
+        if self.subscribers.filter(member=member).exists():
+            response = requests.delete(
+                self.url,
+                {'address': address or member.email},
+                auth=(config.user, config.password),
+            )
+            try:
+                response.raise_for_status()
+                self.subscribers.filter(member=member).delete()
+            except Exception as e:
+                raise
+
 
 class MailingListEntry(models.Model):
     datetime = models.DateTimeField(auto_now=True)
