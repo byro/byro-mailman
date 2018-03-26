@@ -44,5 +44,19 @@ class MailingList(models.Model):
 
 class MailingListEntry(models.Model):
     datetime = models.DateTimeField(auto_now=True)
-    member = models.ForeignKey(to='members.Member', on_delete=models.CASCADE, related_name='mailinglists')
-    mailing_list = models.ForeignKey(to=MailingList, on_delete=models.CASCADE, related_name='subscribers')
+    member = models.ForeignKey(
+        to='members.Member',
+        on_delete=models.CASCADE,
+        related_name='mailinglists',
+        null=True, blank=True,
+    )
+    mailing_list = models.ForeignKey(
+        to=MailingList,
+        on_delete=models.CASCADE,
+        related_name='subscribers',
+    )
+    email = models.EmailField(
+        max_length=200,
+        verbose_name=_('E-Mail'),
+        null=True, blank=True,
+    )
