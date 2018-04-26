@@ -22,12 +22,13 @@ def mailman_member_view(sender, signal, **kwargs):
 @receiver(nav_event)
 def mailman_sidebar(sender, **kwargs):
     request = sender
-    return {
-        'icon': 'envelope-o',
-        'label': _('Mailing lists'),
-        'url': reverse('plugins:byro_mailman:lists.dashboard'),
-        'active': 'byro_mailman' in request.resolver_match.namespace and 'member' not in request.resolver_match.url_name,
-    }
+    if hasattr(request, 'user') and not request.user.is_anonymous:
+        return {
+            'icon': 'envelope-o',
+            'label': _('Mailing lists'),
+            'url': reverse('plugins:byro_mailman:lists.dashboard'),
+            'active': 'byro_mailman' in request.resolver_match.namespace and 'member' not in request.resolver_match.url_name,
+        }
 
 
 @receiver(new_member)
