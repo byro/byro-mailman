@@ -3,10 +3,11 @@ import json
 import requests
 from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
-from solo.models import SingletonModel
+
+from byro.common.models.configuration import ByroConfiguration
 
 
-class MailmanConfiguration(SingletonModel):
+class MailmanConfiguration(ByroConfiguration):
 
     url = models.CharField(
         null=True, blank=True,
