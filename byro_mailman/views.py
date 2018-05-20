@@ -47,7 +47,8 @@ class MemberAdd(MemberLists):
             messages.error(request, _('Mailing list not found.'))
             return redirect(reverse('plugins:byro_mailman:members.mailman.lists', kwargs={'pk': self.kwargs['pk']}))
         try:
-            form.cleaned_data['mailinglist'].add(self.get_object())
+            mailing_list = MailingList.objects.filter(name=form.cleaned_data['mailinglist'])
+            mailing_list.add(self.get_object())
             messages.success(request, _('Member added to mailing list.'))
         except Exception as e:
             messages.error(request, _('Error removing the member from the mailing list: ') + str(e))
