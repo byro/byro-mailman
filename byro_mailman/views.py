@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, View
 
 from byro.office.views.members import MemberView
-from byro.office.models import Member
+from byro.members.models import Member
 
 from .models import MailingList
 
