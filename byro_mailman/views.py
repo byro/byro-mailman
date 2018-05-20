@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, View
 
 from byro.office.views.members import MemberView
+from byro.office.models import Member
 
 from .models import MailingList
 
@@ -19,7 +20,25 @@ class MailmanMemberForm(forms.Form):
         self.fields['mailinglist'].choices = [(n, n) for n in names]
 
 
-class MemberAdd(MemberView):
+class MemberLists(MemberView, TemplateView):
+    template_name = 'byro_mailman/member_lists.html'
+
+    @property
+    def object(self):
+        return self.get_object()
+
+    def get_object(self):
+        return Member.all_objects.get(pk=self.kwargs['pk'])
+
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        member = self.get_object()
+        ctx['lists'] = member.mailinglists.all()
+        ctx['form'] = MailmanMemberForm(member=member)
+        return ctx
+
+
+class MemberAdd(MemberLists):
 
     def post(self, request, pk):
         member = self.get_object()
@@ -35,10 +54,10 @@ class MemberAdd(MemberView):
         return redirect(reverse('plugins:byro_mailman:members.mailman.lists', kwargs={'pk': self.kwargs['pk']}))
 
 
-class MemberRemove(MemberView):
+class MemberRemove(MemberLists):
 
-    def post(self, request, pk, list_id):
-        mailing_list = MailingList.objects.filter(name=list_id).first()
+    def get(self, request, pk, list_id):
+        mailing_list = MailingList.objects.filter(pk=list_id).first()
         if not mailing_list:
             messages.error(request, _('Mailing list not found.'))
             return redirect(reverse('plugins:byro_mailman:members.mailman.lists', kwargs={'pk': self.kwargs['pk']}))
@@ -48,21 +67,6 @@ class MemberRemove(MemberView):
         except Exception as e:
             messages.error(request, _('Error removing the member from the mailing list: ') + str(e))
         return redirect(reverse('plugins:byro_mailman:members.mailman.lists', kwargs={'pk': self.kwargs['pk']}))
-
-
-class MemberLists(MemberView, TemplateView):
-    template_name = 'byro_mailman/member_lists.html'
-
-    @property
-    def object(self):
-        return self.get_object()
-
-    def get_context_data(self, *args, **kwargs):
-        ctx = super().get_context_data(*args, **kwargs)
-        member = self.get_object()
-        ctx['lists'] = member.mailinglists.all()
-        ctx['form'] = MailmanMemberForm(member=member)
-        return ctx
 
 
 class MailmanSync(View):

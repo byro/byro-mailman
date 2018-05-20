@@ -68,7 +68,7 @@ class MailingList(models.Model):
         if not self.subscribers.filter(member=member).exists():
             response = requests.put(
                 self.url,
-                {'address': address or member.email, 'digest': False, 'fullname': ''},
+                data={'address': address or member.email, 'digest': False, 'fullname': ''},
                 auth=(config.user, config.password),
             )
             try:
@@ -82,7 +82,7 @@ class MailingList(models.Model):
         if self.subscribers.filter(member=member).exists():
             response = requests.delete(
                 self.url,
-                {'address': address or member.email},
+                data={'address': address or member.email},
                 auth=(config.user, config.password),
             )
             try:
