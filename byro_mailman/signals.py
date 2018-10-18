@@ -34,5 +34,6 @@ def mailman_sidebar(sender, **kwargs):
 @receiver(new_member)
 def add_new_member(sender, **kwargs):
     member = sender
-    for ml in MailingList.objects.filter(add_when_joining=True):
-        ml.add(member)
+    if member.email:
+        for ml in MailingList.objects.filter(add_when_joining=True):
+            ml.add(member)
