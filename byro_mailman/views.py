@@ -5,8 +5,8 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, View
 
-from byro.office.views.members import MemberView
 from byro.members.models import Member
+from byro.office.views.members import MemberView
 
 from .models import MailingList
 
