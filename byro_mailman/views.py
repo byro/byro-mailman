@@ -51,7 +51,7 @@ class MemberAdd(MemberLists):
             mailing_list.add(self.get_object())
             messages.success(request, _('Member added to mailing list.'))
         except Exception as e:
-            messages.error(request, _('Error removing the member from the mailing list: ') + str(e))
+            messages.error(request, _('Error adding the member to the mailing list: ') + str(e))
         return redirect(reverse('plugins:byro_mailman:members.mailman.lists', kwargs={'pk': self.kwargs['pk']}))
 
 
