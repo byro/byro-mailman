@@ -24,7 +24,7 @@ cmdclass = {
 
 setup(
     name='byro-mailman',
-    version='1.0.0',
+    version='1.0.1',
     description='Mailing list integration for byro',
     long_description=long_description,
     url='https://github.com/byro/byro-mailman',
