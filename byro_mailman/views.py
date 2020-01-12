@@ -82,7 +82,7 @@ class MailmanSync(View):
             total[0] += add
             total[1] += delete
 
-        stats = _('There were {} additions and {} deletions in total.').format(add, delete)
+        stats = _('There were {} additions and {} deletions in total.').format(*total)
         if 'list_id' in self.request.GET:
             messages.success(self.request, _('The mailing list has been synced. ') + stats)
         else:
