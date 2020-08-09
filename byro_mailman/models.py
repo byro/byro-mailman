@@ -60,7 +60,7 @@ class MailingList(models.Model):
         add = new_addresses - old_addresses
         self.subscribers.filter(member__email__in=delete).delete()
         for email in add:
-            MailingListEntry.objects.create(mailing_list=self, member=Member.objects.filter(email=email).first(), email=email)
+            MailingListEntry.objects.create(mailing_list=self, member=Member.objects.filter(email__iexact=email).first(), email=email)
         return (len(add), len(delete))
 
     def add(self, member, address=None):
