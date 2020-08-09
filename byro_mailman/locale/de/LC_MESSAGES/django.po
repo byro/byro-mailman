@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-07 19:01+0100\n"
+"POT-Creation-Date: 2020-07-30 23:36+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: rixx\n"
 "Language-Team: \n"
@@ -10,3 +10,125 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: local/byro-mailman/byro_mailman/__init__.py:10
+msgid "The byro Mailman plugin"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/__init__.py:12
+msgid "Mailing list integration for byro"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/models.py:15
+msgid "Mailman API URL"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/models.py:16
+msgid "e.g. https://foo.bar.de/api"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/models.py:21
+msgid "Mailman API Username"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/models.py:26
+msgid "Mailman API Password"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/models.py:34
+msgid "Add new members automatically"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/models.py:38
+msgid "Remove leaving members automatically"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/models.py:110
+msgid "E-Mail"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/signals.py:16
+#, python-brace-format
+msgid "Mailing lists ({count})"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/signals.py:28
+msgid "Mailing lists"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/templates/byro_mailman/mailman.html:16
+msgid "Sync lists"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/templates/byro_mailman/mailman.html:25
+msgid "Name"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/templates/byro_mailman/mailman.html:26
+msgid "Subscribers"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/templates/byro_mailman/mailman.html:72
+msgid "Add a new mailing list"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/templates/byro_mailman/mailman.html:75
+msgid "Save"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/templates/byro_mailman/member_lists.html:14
+msgid "Add to list"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/templates/byro_mailman/member_lists.html:21
+msgid "List"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/templates/byro_mailman/member_lists.html:22
+msgid "Timestamp"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/templates/byro_mailman/member_lists.html:30
+msgid "remove"
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/views.py:47
+#: local/byro-mailman/byro_mailman/views.py:63
+msgid "Mailing list not found."
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/views.py:52
+msgid "Member added to mailing list."
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/views.py:54
+msgid "Error adding the member to the mailing list: "
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/views.py:67
+msgid "Member removed from mailing list."
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/views.py:69
+msgid "Error removing the member from the mailing list: "
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/views.py:85
+msgid "There were {} additions and {} deletions in total."
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/views.py:87
+msgid "The mailing list has been synced. "
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/views.py:89
+msgid "The mailing lists have been synced. "
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/views.py:115
+msgid "Invalid data."
+msgstr ""
+
+#: local/byro-mailman/byro_mailman/views.py:132
+msgid "Successfully saved."
+msgstr ""
