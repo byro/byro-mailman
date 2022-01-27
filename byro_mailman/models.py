@@ -74,7 +74,7 @@ class MailingList(models.Model):
             try:
                 response.raise_for_status()
                 MailingListEntry.objects.get_or_create(mailing_list=self, member=member)
-            except Exception as e:
+            except Exception:
                 raise
 
     def remove(self, member, address=None):
@@ -88,7 +88,7 @@ class MailingList(models.Model):
             try:
                 response.raise_for_status()
                 self.subscribers.filter(member=member).delete()
-            except Exception as e:
+            except Exception:
                 raise
 
 
