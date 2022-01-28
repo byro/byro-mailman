@@ -13,21 +13,24 @@ def mailman_member_view(sender, signal, **kwargs):
     member = sender
     count = MailingList.objects.filter(subscribers__member=member).count()
     return {
-        'label': _('Mailing lists ({count})').format(count=count),
-        'url': reverse('plugins:byro_mailman:members.mailman.lists', kwargs={'pk': member.pk}),
-        'url_name': 'plugins:byro_mailman:members.mailman.lists',
+        "label": _("Mailing lists ({count})").format(count=count),
+        "url": reverse(
+            "plugins:byro_mailman:members.mailman.lists", kwargs={"pk": member.pk}
+        ),
+        "url_name": "plugins:byro_mailman:members.mailman.lists",
     }
 
 
 @receiver(nav_event)
 def mailman_sidebar(sender, **kwargs):
     request = sender
-    if hasattr(request, 'user') and not request.user.is_anonymous:
+    if hasattr(request, "user") and not request.user.is_anonymous:
         return {
-            'icon': 'envelope-o',
-            'label': _('Mailing lists'),
-            'url': reverse('plugins:byro_mailman:lists.dashboard'),
-            'active': 'byro_mailman' in request.resolver_match.namespace and 'member' not in request.resolver_match.url_name,
+            "icon": "envelope-o",
+            "label": _("Mailing lists"),
+            "url": reverse("plugins:byro_mailman:lists.dashboard"),
+            "active": "byro_mailman" in request.resolver_match.namespace
+            and "member" not in request.resolver_match.url_name,
         }
 
 

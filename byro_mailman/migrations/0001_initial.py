@@ -9,38 +9,112 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('members', '0006_auto_20180113_1849'),
+        ("members", "0006_auto_20180113_1849"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='MailingList',
+            name="MailingList",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('add_when_joining', models.BooleanField(default=True, verbose_name='Add new members automatically')),
-                ('remove_when_leaving', models.BooleanField(default=True, verbose_name='Remove leaving members automatically')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                (
+                    "add_when_joining",
+                    models.BooleanField(
+                        default=True, verbose_name="Add new members automatically"
+                    ),
+                ),
+                (
+                    "remove_when_leaving",
+                    models.BooleanField(
+                        default=True,
+                        verbose_name="Remove leaving members automatically",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='MailingListEntry',
+            name="MailingListEntry",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('datetime', models.DateTimeField(auto_now=True)),
-                ('mailing_list', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='subscribers', to='byro_mailman.MailingList')),
-                ('member', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='mailinglists', to='members.Member')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("datetime", models.DateTimeField(auto_now=True)),
+                (
+                    "mailing_list",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="subscribers",
+                        to="byro_mailman.MailingList",
+                    ),
+                ),
+                (
+                    "member",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="mailinglists",
+                        to="members.Member",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='MailmanConfiguration',
+            name="MailmanConfiguration",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('url', models.CharField(blank=True, help_text='e.g. https://foo.bar.de/api', max_length=300, null=True, verbose_name='Mailman API URL')),
-                ('user', models.CharField(blank=True, max_length=300, null=True, verbose_name='Mailman API Username')),
-                ('password', models.CharField(blank=True, max_length=300, null=True, verbose_name='Mailman API Password')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "url",
+                    models.CharField(
+                        blank=True,
+                        help_text="e.g. https://foo.bar.de/api",
+                        max_length=300,
+                        null=True,
+                        verbose_name="Mailman API URL",
+                    ),
+                ),
+                (
+                    "user",
+                    models.CharField(
+                        blank=True,
+                        max_length=300,
+                        null=True,
+                        verbose_name="Mailman API Username",
+                    ),
+                ),
+                (
+                    "password",
+                    models.CharField(
+                        blank=True,
+                        max_length=300,
+                        null=True,
+                        verbose_name="Mailman API Password",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

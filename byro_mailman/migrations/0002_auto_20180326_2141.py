@@ -7,18 +7,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('byro_mailman', '0001_initial'),
+        ("byro_mailman", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='mailinglistentry',
-            name='email',
-            field=models.EmailField(blank=True, max_length=200, null=True, verbose_name='E-Mail'),
+            model_name="mailinglistentry",
+            name="email",
+            field=models.EmailField(
+                blank=True, max_length=200, null=True, verbose_name="E-Mail"
+            ),
         ),
         migrations.AlterField(
-            model_name='mailinglistentry',
-            name='member',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='mailinglists', to='members.Member'),
+            model_name="mailinglistentry",
+            name="member",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="mailinglists",
+                to="members.Member",
+            ),
         ),
     ]
