@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 
 
 class PluginApp(AppConfig):
@@ -7,9 +7,9 @@ class PluginApp(AppConfig):
     verbose_name = "The byro Mailman plugin"
 
     class ByroPluginMeta:
-        name = ugettext_lazy("The byro Mailman plugin")
+        name = gettext_lazy("The byro Mailman plugin")
         author = "rixx"
-        description = ugettext_lazy("Mailing list integration for byro")
+        description = gettext_lazy("Mailing list integration for byro")
         visible = True
         version = "1.0.1"
 
